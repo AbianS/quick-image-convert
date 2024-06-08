@@ -1,0 +1,263 @@
+{
+  "name": "quick-image-convert",
+  "displayName": "Quick Image Convert",
+  "description": "VSCode extension for quick image conversion and optimization.",
+  "version": "1.0.0",
+  "icon": "media/logo.png",
+  "repository": "https://github.com/AbianS/quick-image-convert",
+  "publisher": "AbianS",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "files": [
+    "node_modules/sharp/**/*"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Quick Image Convert",
+      "properties": {
+        "quick-image-convert.avif.quality": {
+          "type": "number",
+          "default": 80,
+          "description": "Avif image quality. Higher values result in better quality but larger file sizes.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "quick-image-convert.avif.lossless": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the Avif image will be lossless. This will result in a larger file size but better quality."
+        },
+        "quick-image-convert.avif.effort": {
+          "type": "number",
+          "default": 4,
+          "description": "Avif image encoding effort. Higher values result in better quality but longer encoding times.",
+          "minimum": 0,
+          "maximum": 9
+        },
+        "quick-image-convert.avif.chromaSubsampling": {
+          "type": "string",
+          "default": "4:4:4",
+          "description": "Avif image chroma subsampling. Higher values result in better quality but larger file sizes.",
+          "enum": [
+            "4:4:4",
+            "4:2:0"
+          ]
+        },
+        "quick-image-convert.avif.bitdepth": {
+          "type": "number",
+          "default": 8,
+          "description": "Avif image bit depth. Higher values result in better quality but larger file sizes.",
+          "enum": [
+            8,
+            10,
+            12
+          ]
+        },
+        "quick-image-convert.avif.useDefaultValues": {
+          "type": "boolean",
+          "default": true,
+          "description": "When enabled, the default values for the Avif conversion will be used. When disabled, the user will be prompted to enter the values."
+        },
+        "quick-image-convert.webp.quality": {
+          "type": "number",
+          "default": 80,
+          "description": "Webp image quality. Higher values result in better quality but larger file sizes.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "quick-image-convert.webp.alphaQuality": {
+          "type": "number",
+          "default": 100,
+          "description": "Webp image alpha quality. Higher values result in better quality but larger file sizes.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "quick-image-convert.webp.lossless": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the Webp image will be lossless. This will result in a larger file size but better quality."
+        },
+        "quick-image-convert.webp.nearLossless": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the Webp image will be near lossless. This will result in a larger file size but better quality."
+        },
+        "quick-image-convert.webp.smartSubsample": {
+          "type": "boolean",
+          "default": true,
+          "description": "When enabled, the Webp image will use smart subsampling. This will result in a smaller file size but lower quality."
+        },
+        "quick-image-convert.webp.effort": {
+          "type": "number",
+          "default": 4,
+          "description": "Webp image encoding effort. Higher values result in better quality but longer encoding times.",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "quick-image-convert.webp.minSize": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the Webp image will be optimized for minimum size. This will result in a smaller file size but lower quality."
+        },
+        "quick-image-convert.webp.mixed": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the Webp image will use mixed compression. This will result in a smaller file size but lower quality."
+        },
+        "quick-image-convert.webp.preset": {
+          "type": "string",
+          "default": "default",
+          "description": "Webp image preset. Higher values result in better quality but larger file sizes.",
+          "enum": [
+            "default",
+            "photo",
+            "picture",
+            "drawing",
+            "icon",
+            "text"
+          ]
+        },
+        "quick-image-convert.webp.useDefaultValues": {
+          "type": "boolean",
+          "default": true,
+          "description": "When enabled, the default values for the Avif conversion will be used. When disabled, the user will be prompted to enter the values."
+        },
+        "quick-image-convert.resize.fit": {
+          "type": "string",
+          "default": "cover",
+          "description": "Resize fit. Determines how the image should be resized to fit the dimensions provided.",
+          "enum": [
+            "inside",
+            "outside",
+            "cover",
+            "contain",
+            "fill"
+          ]
+        },
+        "quick-image-convert.resize.position": {
+          "type": "string",
+          "default": "center",
+          "description": "Resize position. Determines where the image should be positioned when resizing.",
+          "enum": [
+            "top",
+            "right top",
+            "right",
+            "right bottom",
+            "bottom",
+            "left bottom",
+            "left",
+            "left top",
+            "centre"
+          ]
+        },
+        "quick-image-convert.resize.kernel": {
+          "type": "string",
+          "default": "lanczos3",
+          "description": "Resize kernel. Determines the algorithm used to resize the image.",
+          "enum": [
+            "nearest",
+            "cubic",
+            "mitchell",
+            "lanczos2",
+            "lanczos3"
+          ]
+        },
+        "quick-image-convert.resize.withoutEnlargement": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the image will not be enlarged if the dimensions provided are larger than the original image."
+        },
+        "quick-image-convert.resize.withoutReduction": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the image will not be reduced if the dimensions provided are smaller than the original image."
+        },
+        "quick-image-convert.resize.fastShrinkOnLoad": {
+          "type": "boolean",
+          "default": true,
+          "description": "When enabled, the image will be resized quickly when loaded."
+        }
+      }
+    },
+    "menus": {
+      "explorer/context": [
+        {
+          "submenu": "quick-image-convert.ImageEditor",
+          "group": "quick-image-convert"
+        }
+      ],
+      "quick-image-convert.ImageEditor": [
+        {
+          "command": "quick-image-convert.ToWebP",
+          "when": "resourceScheme == 'file' && resourceFilename =~ /\\.(png|jpg|jpeg|gif|bmp|ico|avif)$/i"
+        },
+        {
+          "command": "quick-image-convert.Resize",
+          "when": "resourceScheme == 'file' && resourceFilename =~ /\\.(png|jpg|jpeg|gif|bmp|ico|avif|webp)$/i"
+        },
+        {
+          "command": "quick-image-convert.ToAvif",
+          "when": "resourceScheme == 'file' && resourceFilename =~ /\\.(png|jpg|jpeg|gif|bmp|ico|webp)$/i"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "command": "quick-image-convert.ImageEditor",
+        "id": "quick-image-convert.ImageEditor",
+        "label": "✨ Quick Image Convert"
+      }
+    ],
+    "commands": [
+      {
+        "command": "quick-image-convert.ToWebP",
+        "title": "Convert to WebP"
+      },
+      {
+        "command": "quick-image-convert.ToAvif",
+        "title": "Convert to Avif"
+      },
+      {
+        "command": "quick-image-convert.Resize",
+        "title": "Rezize Image"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "npm install sharp",
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.89.0",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "esbuild": "^0.21.4",
+    "eslint": "^8.57.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "sharp": "^0.33.4"
+  }
+}
